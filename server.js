@@ -1,8 +1,7 @@
 // Require the framework and instantiate it
 const fastify = require("fastify")({ logger: true });
 
-// Declare a route
-fastify.get("/", async (request, reply) => {
+fastify.get("/releases", async (request, reply) => {
   return { hello: "world" };
 });
 

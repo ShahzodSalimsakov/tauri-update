@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.11.0"
+    "fastify": "^4.11.0",
+    "node-fetch": "2.0.0",
+    "async-retry": "1.2.3",
+    "stream-to-string": "1.1.0",
+    "ms": "2.1.1"
   }
 }
