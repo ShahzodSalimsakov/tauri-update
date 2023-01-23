@@ -23,6 +23,7 @@
     "node-cache-redis": "^6.4.2",
     "node-fetch": "^3.3.0",
     "point-of-view": "^6.3.0",
+    "semver": "^7.3.8",
     "stream-to-string": "^1.2.0"
   },
   "devDependencies": {

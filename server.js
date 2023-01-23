@@ -4,6 +4,7 @@ const fastify = require("fastify")({ logger: true });
 const { Liquid } = require("liquidjs");
 const path = require("path");
 const distanceInWordsToNow = require("date-fns/formatDistanceToNow");
+const { valid, compare } = require("semver");
 const {
   loadCache,
   refreshCache,
@@ -90,8 +91,78 @@ fastify.get("/download", async (request, reply) => {
   }
 
   return reply.redirect(platforms[platform].url);
+});
 
-  return request.userAgent.os.toString();
+fastify.get("/download/:platform", async (request, reply) => {
+  const { platform } = request.params;
+  const params = request.query;
+  const isUpdate = params && params.update;
+  if (platform === "mac" && !isUpdate) {
+    platform = "dmg";
+  }
+
+  // Get the latest version from the cache
+  const latest = await loadCache();
+
+  // Check platform for appropiate aliases
+  platform = checkAlias(platform);
+
+  if (!platform) {
+    return reply.code(500).send("The specified platform is not valid");
+  }
+
+  if (!latest.platforms || !latest.platforms[platform]) {
+    return reply.code(404).send("No download available for your platform");
+  }
+
+  if (token && typeof token === "string" && token.length > 0) {
+    return proxyPrivateDownload(latest.platforms[platform], request, reply);
+  }
+
+  return reply.redirect(latest.platforms[platform].url);
+});
+
+fastify.get("/update/:platform/:version", async (request, reply) => {
+  const { platform: platformName, version } = request.params;
+  const latest = await loadCache();
+
+  if (!valid(version)) {
+    return reply.code(500).send({
+      error: "version_invalid",
+      message: "The specified version is not SemVer-compatible",
+    });
+  }
+
+  // Check platform for appropiate aliases
+
+  const platform = checkAlias(platformName);
+
+  if (!platform) {
+    return reply.code(500).send({
+      error: "invalid_platform",
+      message: "The specified platform is not valid",
+    });
+  }
+
+  if (!latest.platforms || !latest.platforms[platform]) {
+    return reply.code(204).send();
+  }
+
+  if (compare(latest.version, version) !== 0) {
+    const { notes, pub_date } = latest;
+
+    return reply.send({
+      name: latest.version,
+      notes,
+      pub_date,
+      signature: latest.platforms[platform].signature,
+      url: shouldProxyPrivateDownload
+        ? `https://tablo.lesailes.uz/download/${platformName}?update=true`
+        : latest.platforms[platform].url,
+    });
+  }
+
+  return reply.code(204).send();
 });
 
 fastify.get("/releases", async (request, reply) => {
@@ -101,7 +172,7 @@ fastify.get("/releases", async (request, reply) => {
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen({ port: 3000 });
+    await fastify.listen({ port: process.env.PORT });
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
