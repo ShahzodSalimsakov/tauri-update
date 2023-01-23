@@ -14,7 +14,7 @@ module.exports = {
         NODE_ENV: "production",
         GITHUB_ACCOUNT: "shahzodsalimsakov",
         GITHUB_REPO: "tauritablo",
-        GITHUB_TOKEN: "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",
+        GITHUB_TOKEN: "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",
       },
     },
   ],
