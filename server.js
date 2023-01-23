@@ -95,7 +95,7 @@ fastify.get("/download", async (request, reply) => {
 });
 
 fastify.get("/download/:platform", async (request, reply) => {
-  const { platform } = request.params;
+  let { platform } = request.params;
   const params = request.query;
   const isUpdate = params && params.update;
   if (platform === "mac" && !isUpdate) {
