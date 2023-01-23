@@ -78,7 +78,7 @@ fastify.get("/download", async (request, reply) => {
   } else if (isMac && !isUpdate) {
     platform = "dmg";
   } else if (isWindows) {
-    platform = "exe";
+    platform = "msi";
   }
 
   // Get the latest version from the cache

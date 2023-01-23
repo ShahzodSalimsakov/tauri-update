@@ -35,6 +35,6 @@ module.exports = (fileName) => {
     return "appimage";
   }
 
-  const directCache = ["exe", "dmg", "rpm", "deb"];
+  const directCache = ["msi", "dmg", "rpm", "deb"];
   return directCache.find((ext) => ext === extension) || false;
 };

@@ -5,7 +5,7 @@ const aliases = {
   // actually we bind all linux to appimage
   appimage: ["linux32", "linux64", "linux"],
   // Not supported yet
-  exe: ["exe"],
+  msi: ["msi"],
   dmg: ["dmg"],
   deb: ["debian"],
   rpm: ["fedora"],
