@@ -10,10 +10,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/static": "^6.6.1",
+    "@fastify/view": "^7.4.0",
+    "async-retry": "^1.3.3",
+    "axios": "^1.2.3",
+    "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
     "fastify": "^4.11.0",
-    "node-fetch": "2.0.0",
-    "async-retry": "1.2.3",
-    "stream-to-string": "1.1.0",
-    "ms": "2.1.1"
+    "fastify-user-agent": "^1.0.1",
+    "liquidjs": "^10.4.0",
+    "ms": "2.1.1",
+    "node-cache-redis": "^6.4.2",
+    "node-fetch": "^3.3.0",
+    "point-of-view": "^6.3.0",
+    "stream-to-string": "^1.2.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
   }
 }

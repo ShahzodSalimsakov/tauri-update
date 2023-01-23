@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablo Update</title>
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+  <body class="bg-white dark:bg-slate-900">
+    <div class="grid place-items-center h-screen">
+      <div class="text-center bg-white border border-gray-200 rounded-lg shadow-lg  dark:bg-gray-800 dark:border-gray-700">
+        <div class="border-b-2 p-4 flex items-center justify-end text-sm space-x-2">
+          <span class="text-black dark:text-gray-200 font-bold">
+            Опубликован:
+          </span>
+          <span class="text-gray-600 dark:text-gray-400">
+            {{ date }}
+          </span>
+        </div>
+        <div class="p-4 sm:p-8">
+          <dl>
+            <div class="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+              {% for file in files %}
+                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  {{ file[0] }}:
+                  <span class="url">
+                    <a href={{ file[1].url }} class="text-blue-400 cursor-pointer hover:underline-offset-4 hover:underline">/latest/{{ file[0] }}</a>
+                  </span>
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900 dark:text-gray-200 sm:mt-0 sm:col-span-2 text-right">
+                  {{ file[0].size }} MB
+                </dd>
+              {% endfor %}
+
+            </div>
+          </dl>
+          <div class="py-2 flex items-center justify-between">
+            <span class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-3 py-2 text-center text-white">{{ version }}</span>
+            <a href={{ releaseNotes }} class="dark:text-white text-gray-400 hover:underline-offset-4 hover:underline">Release Notes</a>
+            <a href={{ allReleases }} class="dark:text-white text-gray-400 hover:underline-offset-4 hover:underline">All Releases</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
