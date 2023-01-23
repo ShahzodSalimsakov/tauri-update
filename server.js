@@ -113,6 +113,9 @@ fastify.get("/download/:platform", async (request, reply) => {
     return reply.code(500).send("The specified platform is not valid");
   }
 
+  console.log(platform);
+  console.log(latest.platforms);
+
   if (!latest.platforms || !latest.platforms[platform]) {
     return reply.code(404).send("No download available for your platform");
   }
