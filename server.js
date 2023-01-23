@@ -60,6 +60,7 @@ fastify.get("/refresh-cache", async (request, reply) => {
 
 fastify.get("/download", async (request, reply) => {
   const os = request.userAgent.os.toString();
+  console.log("os", os);
   const isMac = os.includes("Mac OS");
   const isWindows = os.includes("Windows");
   const params = request.query;
