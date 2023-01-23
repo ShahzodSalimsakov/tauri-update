@@ -5,6 +5,7 @@ const { Liquid } = require("liquidjs");
 const path = require("path");
 const distanceInWordsToNow = require("date-fns/formatDistanceToNow");
 const { valid, compare } = require("semver");
+const checkAlias = require("./alias");
 const {
   loadCache,
   refreshCache,
