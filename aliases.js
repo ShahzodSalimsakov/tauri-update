@@ -1,7 +1,7 @@
 const aliases = {
   darwin: ["mac", "macos", "osx"],
-  win32: ["windows32", "windows", "win"],
-  win64: ["windows64"],
+  win32: ["windows32", "win"],
+  win64: ["windows64", "windows"],
   // actually we bind all linux to appimage
   appimage: ["linux32", "linux64", "linux"],
   // Not supported yet

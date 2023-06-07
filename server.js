@@ -60,7 +60,7 @@ fastify.get("/refresh-cache", async (request, reply) => {
 
 fastify.get("/download", async (request, reply) => {
   const os = request.userAgent.os.toString();
-  console.log("os", os);
+  // console.log("os", os);
   const isMac = os.includes("Mac OS");
   const isWindows = os.includes("Windows");
   const params = request.query;
@@ -78,21 +78,22 @@ fastify.get("/download", async (request, reply) => {
   } else if (isMac && !isUpdate) {
     platform = "dmg";
   } else if (isWindows) {
-    platform = "msi";
+    platform = "win64";
   }
 
   // Get the latest version from the cache
   const { platforms } = await loadCache();
-
+  // console.log(platform);
+  // console.log(platforms);
   if (!platform || !platforms || !platforms[platform]) {
     return reply.code(404).send("No download available for your platform!");
   }
 
-  if (shouldProxyPrivateDownload) {
-    return proxyPrivateDownload(platforms[platform], request, reply);
-  }
+  // if (shouldProxyPrivateDownload) {
+  //   return proxyPrivateDownload(platforms[platform], request, reply);
+  // }
 
-  return reply.redirect(platforms[platform].url);
+  return reply.code(302).redirect(platforms[platform].url);
 });
 
 fastify.get("/download/:platform", async (request, reply) => {
@@ -113,8 +114,8 @@ fastify.get("/download/:platform", async (request, reply) => {
     return reply.code(500).send("The specified platform is not valid");
   }
 
-  console.log(platform);
-  console.log(latest.platforms);
+  // console.log(platform);
+  // console.log(latest.platforms);
 
   if (!latest.platforms || !latest.platforms[platform]) {
     return reply.code(404).send("No download available for your platform");
@@ -141,7 +142,7 @@ fastify.get("/update/:platform/:version", async (request, reply) => {
   // Check platform for appropiate aliases
 
   const platform = checkAlias(platformName);
-
+console.log(platform);
   if (!platform) {
     return reply.code(500).send({
       error: "invalid_platform",
@@ -161,9 +162,9 @@ fastify.get("/update/:platform/:version", async (request, reply) => {
       notes,
       pub_date,
       signature: latest.platforms[platform].signature,
-      url: shouldProxyPrivateDownload
+      url: /*shouldProxyPrivateDownload
         ? `https://tablo.lesailes.uz/download/${platformName}?update=true`
-        : latest.platforms[platform].url,
+        : */latest.platforms[platform].url,
     });
   }
 

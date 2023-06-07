@@ -113,9 +113,13 @@ const proxyPrivateDownload = async (asset, req, res) => {
     `https://${GITHUB_TOKEN}@api.github.com/`
   );
 
-  const { data } = await axios.get(finalUrl, options);
-
-  return res.redirect(data.headers.get("Location"));
+  const data = await axios.get(finalUrl, options);
+  // console.log(finalUrl)
+  // console.log(data.headers);
+  for (var key in data.headers) {
+    res.header(key, data.headers[key]);
+  }
+  return res.send(data.data);
 };
 
 module.exports = {
