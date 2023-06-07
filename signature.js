@@ -1,3 +1,4 @@
+require("dotenv").config();
 const retry = require("async-retry");
 const convertStream = require("stream-to-string");
 const axios = require("axios");
@@ -16,6 +17,7 @@ module.exports = async (fileName, assets) => {
     async () => {
       const response = await axios.get(foundSignature.browser_download_url, {
         responseType: "stream",
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
       });
 
       if (response.status !== 200) {
