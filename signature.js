@@ -15,10 +15,18 @@ module.exports = async (fileName, assets) => {
 
   const { data } = await retry(
     async () => {
-      const response = await axios.get(foundSignature.browser_download_url, {
-        responseType: "stream",
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      });
+      const response = await axios.get(
+        foundSignature.browser_download_url,
+        {
+          responseType: "stream",
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          },
+        }
+      );
 
       if (response.status !== 200) {
         throw new Error(
