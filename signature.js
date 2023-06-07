@@ -19,7 +19,6 @@ module.exports = async (fileName, assets) => {
         foundSignature.browser_download_url,
         {
           responseType: "stream",
-          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         },
         {
           headers: {
