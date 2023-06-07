@@ -26,7 +26,7 @@ const refreshCache = async () => {
     typeof GITHUB_TOKEN === "string" &&
     GITHUB_TOKEN.length > 0
   ) {
-    headers.Authorization = `token ${GITHUB_TOKEN}`;
+    headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
   }
   const response = await retry(
     async () => {
