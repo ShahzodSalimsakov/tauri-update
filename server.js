@@ -164,7 +164,10 @@ fastify.get("/update/:platform/:version", async (request, reply) => {
       signature: latest.platforms[platform].signature,
       url: /*shouldProxyPrivateDownload
         ? `https://tablo.lesailes.uz/download/${platformName}?update=true`
-        : */ latest.platforms[platform].url,
+        : */ latest.platforms[platform].api_url.replace(
+        "api.github.com",
+        `${process.env.GITHUB_TOKEN}:@api.github.com`
+      ),
     });
   }
 
