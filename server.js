@@ -157,7 +157,7 @@ fastify.get("/update/:platform/:version", async (request, reply) => {
   if (compare(latest.version, version) !== 0) {
     const { notes, pub_date } = latest;
     console.log("platform", latest.platforms[platform]);
-    return reply.send({
+    const result = {
       name: latest.version,
       notes,
       pub_date,
@@ -168,7 +168,9 @@ fastify.get("/update/:platform/:version", async (request, reply) => {
         "api.github.com",
         `${process.env.GITHUB_TOKEN}:@api.github.com`
       ),
-    });
+    };
+    console.log("result", result);
+    return reply.send(result);
   }
 
   return reply.code(204).send();
