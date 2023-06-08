@@ -142,7 +142,7 @@ fastify.get("/update/:platform/:version", async (request, reply) => {
   // Check platform for appropiate aliases
 
   const platform = checkAlias(platformName);
-console.log(platform);
+  console.log(platform);
   if (!platform) {
     return reply.code(500).send({
       error: "invalid_platform",
@@ -156,7 +156,7 @@ console.log(platform);
 
   if (compare(latest.version, version) !== 0) {
     const { notes, pub_date } = latest;
-
+    console.log("platform", latest.platforms[platform]);
     return reply.send({
       name: latest.version,
       notes,
@@ -164,7 +164,7 @@ console.log(platform);
       signature: latest.platforms[platform].signature,
       url: /*shouldProxyPrivateDownload
         ? `https://tablo.lesailes.uz/download/${platformName}?update=true`
-        : */latest.platforms[platform].url,
+        : */ latest.platforms[platform].url,
     });
   }
 
